@@ -7,9 +7,8 @@ layout: default
 {% assign items = site.data.transcripts[page.object-id] %}
 {%- comment -%} find all words used in the subject metadata {%- endcomment -%}
 {%- assign min-count = 1 -%}
-{%- assign raw-subjects = items | map: "tags" | compact | join: ";" | split: ";" -%}
-{%- capture subjects -%}{% for s in raw-subjects %}{% if s != "" %}{{- s | strip | downcase -}};{% endif %}{%- endfor -%}{%- endcapture -%}
-{%- assign subjects = subjects | split: ";" -%}
+{%- assign raw-subjects = items | map: "tags" | compact | join: ";" -%}
+{%- assign subjects = raw-subjects | split: ";" -%}
 {%- assign uniqueSubjects = subjects | uniq | sort -%}
 {%endif%}
 
@@ -29,20 +28,20 @@ layout: default
           <div class="container">
               <div class="row">
                   <div class="col-md-12">
-       <header><h2 class="poet-name">Interview with {{ page.first-name }} {{ page.last-name }}</h2>
-    <p>{{page.location}} on {{page.date-interviewed}} | Interviewer: {{page.interviewer}}</p>
+       <header><h2 class="poet-name">{{page.title}}</h2>
+    <p>{{page.location}} on {{page.date-interviewed}} </p>
   </header> 
   <div class="filteroptions">
    <h2><select id="filters" title="Jump to a year" class="filteroptions" style="max-width: 100%;">
-      <option value="#" selected="selected">On All Topics</option>
+      <option value="#" selected="selected">All Speakers</option>
              {% assign filters = site.data.filters %}
              {% if page.object-id == 'all' %}
              {% for filter in filters %}
-             <option value="{{ filter.shortfilter }}" >On {{filter.text}}</option>
+             <option value="{{ filter.shortfilter }}" >{{ filter.shortfilter }} - {{filter.text | split: "," | first}}</option>
                        {% endfor %}
              {%else%}
              {% for filter in filters %}
-     {%if uniqueSubjects contains filter.shortfilter %}<option value="{{ filter.shortfilter }}" >On {{filter.text}}</option>{%endif%}
+     {%if uniqueSubjects contains filter.shortfilter %}<option value="{{ filter.shortfilter }}" >{{ filter.shortfilter }} - {{filter.text | split: "," | first}}</option>{%endif%}
                {% endfor %}
                {%endif%}
               <br/> <hr/><br/>
