@@ -3,9 +3,6 @@ layout: default
 ---
 {% if page.object-id == 'all' %}
 {% assign transcripts = site.data.transcripts %}
-{%capture youtubes%}{% for y in site.transcripts %}{{ y.youtube | strip }};{% endfor %}
-{% endcapture %}
-{% assign youtube-list = youtubes | split: ";" %}
 {% else %}
 {% assign items = site.data.transcripts[page.object-id] %}
 {%- comment -%} find all words used in the subject metadata {%- endcomment -%}
